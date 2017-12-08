@@ -1,57 +1,22 @@
-Laravel Collective (Forms & HTML pakage)
+<form action="{{ url('insert') }}" method="post" enctype="multipart/form-data">
+    <input type="text" name="name"><br/><br/>
 
-https://laravelcollective.com/docs/5.4/html
+    <input type="radio" name="gender" value="m"><br/><br/>
+    <input type="radio" name="gender" value="f"><br/><br/>
 
+    <select name="size">
+        <option value="0">select something</option>
+        <option value="1">gents</option>
+        <option value="3">dfs</option>
+    </select>
 
-*. CMD :
+    <br/><br/>
 
-   composer require "laravelcollective/html":"^5.4.0"
- 
-
-
-
-*. config/app.php :
-
-  'providers' => [
-    
-    Collective\Html\HtmlServiceProvider::class,
-    
-  ],
-
-
-
-
-*. config/app.php
-
-  'aliases' => [
-
-      'Form' => Collective\Html\FormFacade::class,
-      'Html' => Collective\Html\HtmlFacade::class,
-
-  ],
-
-
-*. Form :
-
-
-{!! Form::open(['url' => 'submit','class'=>'abc','method'=>'get','files' => true]) !!}
-         
-<?php echo Form::email("field_name", $value = "value_here", $attributes = ['class'=>'d','id'=>'ss']); ?>		 
-
-<?php echo Form::file("field_name", $attributes = ['class'=>'abc','method'=>'get']);?>
-
-<?php echo Form::radio('field_name', 'value', true, $attributes = ['class'=>'abc','method'=>'get']); ?>
-
-<?php echo Form::select('field_name', ['L' => 'Large', 'S' => 'Small'], 'selected_value'); ?>
-
-<?php echo Form::selectMonth('month'); ?>
-
-<?php echo Form::token(); ?>
-
-<?php echo Form::submit('Click Me!'); ?>
-     
-{!! Form::close() !!}
-
+    <input type="file" name="image1"> <br/><br/>
+    <input type="file" name="image2"> <br/><br/>
+     {{ csrf_field() }}
+    <input type="submit" name="submit">
+</form>
 
 
 
