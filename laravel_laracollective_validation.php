@@ -34,7 +34,7 @@ https://laravelcollective.com/docs/5.4/html
 *. Form :
 
 
-{!! Form::open(['url' => 'foo/bar','class'=>'abc','method'=>'get','files' => true]) !!}
+{!! Form::open(['url' => 'submit','class'=>'abc','method'=>'get','files' => true]) !!}
          
 <?php echo Form::email("field_name", $value = "value_here", $attributes = ['class'=>'d','id'=>'ss']); ?>		 
 
