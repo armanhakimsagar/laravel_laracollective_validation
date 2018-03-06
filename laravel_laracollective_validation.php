@@ -30,8 +30,6 @@ use App\Http\Requests;
 
 use App\Http\Controllers\controller;
 
-use App\ViewModel;
-
 use Illuminate\Http\Request;
 
 use Validator;
@@ -39,35 +37,50 @@ use Validator;
 
 
 
-$validator = Validator::make($request->all(), [
+    
+    public function Validation(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
 	
-	'field' => 'alpha_dash',
+		'field' => 'alpha_dash',
 
-	'field' => 'min:6|regex:/^(?=.*[a-z])(?=.*[A-Z]).+$/',
+		'field' => 'min:6|regex:/^(?=.*[a-z])(?=.*[A-Z]).+$/',
 
-	'field_confirmation' => 'max:255|same:fieldname',
+		'field_confirmation' => 'max:255|same:fieldname',
 
-	'field' => 'Unique:database_tablename',
+		'field' => 'Unique:database_tablename',
+
+		'field' => 'date|date_format:Y-m-d',
+
+		'field' => 'mimes:jpeg,jpg,png | min:400kb | dimensions:min_width=100,min_height=200',
+
+		'field' => 'mimetypes:video/avi,video/mpeg',
 	
-	'field' => 'date|date_format:Y-m-d',
-
-	'field' => 'mimes:jpeg,jpg,png | min:400kb | dimensions:min_width=100,min_height=200',
-	
-	'field' => 'mimetypes:video/avi,video/mpeg',
-	
-]);
+	]);
 
 
+	if ($validator->fails()) {
+		    return redirect('admin/research_form')
+				->withErrors($validator)
+				->withInput();
+		}
 
-if ($validator->fails()) {
-
-   return redirect('/')->withErrors($validator)->withInput();
+	}
 
 }
 
 
+
+
+
+
+
+
+
   In view page ->
   
+
+
   // show all error
   
   foreach ($errors->all() as $message) {
@@ -76,10 +89,76 @@ if ($validator->fails()) {
 	
   }
     
+
+
+
   // show indivisual error
   
   echo $errors->first('email');
     
+
+
+
+  // best way :
+
+	create file in : resource/views/backend/pertial/operation_message;
+
+		@if ($alert_message = Session::get('success'))
+		<div class="alert alert-success">
+		    <strong>Success!</strong> {{ $alert_message}} 
+		</div>
+		@endif
+		@if ($alert_message = Session::get('error'))
+		<div class="alert alert-danger">
+		    <strong>Info!</strong> {{ $alert_message}}
+		</div>
+		@endif
+		@if ($alert_message = Session::get('warning'))
+		<div class="alert alert-warning">
+		    <strong>Warning!</strong> {{ $alert_message}}
+		</div>
+		@endif
+		@if ($alert_message = Session::get('info'))
+		<div class="alert alert-info">
+		    <strong>Danger!</strong> {{ $alert_message}}
+		</div>
+		@endif
+		<div class="alert alert-success json_alert_message" id='success_message'>
+		    <strong>Success!</strong> <span id='message'></span> 
+		</div>
+		<div class="alert alert-info json_alert_message" id='info_message'>
+		    <strong>Info!</strong> {{ $alert_message}}
+		</div>
+		<div class="alert alert-warning json_alert_message" id='warning_message'>
+		    <strong>Warning!</strong> {{ $alert_message}}
+		</div>
+		<div class="alert alert-danger json_alert_message" id='danger_message'>
+		    <strong>Danger!</strong> {{ $alert_message}}
+		</div>
+
+
+
+
+
+	now include in view page :
+
+	@include('backend/pertial/operation_message');
+
+	@if ($errors->has('title'))
+        <br>
+            <div class="alert-error">{{ $errors->first('title') }}</div>
+        @endif
+
+
+
+
+
+
+
+
+
+_____________________________________________________________________
+
 
 
 
